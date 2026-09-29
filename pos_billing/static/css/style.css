@@ -1,0 +1,1284 @@
+/* =====================================================
+   DESIGN TOKENS
+===================================================== */
+
+:root {
+    --pos-accent: #ff6b35;
+    --pos-accent-dark: #e85b29;
+    --pos-accent-soft: #fff3ec;
+    --pos-ink: #0f172a;
+    --pos-muted: #64748b;
+    --pos-bg: #f3f5f8;
+    --pos-card: #ffffff;
+    --pos-border: #e6ebf1;
+    --pos-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    --pos-radius: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body,
+.app-body {
+    margin: 0;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+        radial-gradient(1200px 400px at 0% -10%, rgba(255, 107, 53, 0.08), transparent 55%),
+        var(--pos-bg);
+    color: var(--pos-ink);
+    min-height: 100vh;
+}
+
+.skip-link {
+    position: absolute;
+    left: 12px;
+    top: -40px;
+    background: var(--pos-ink);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    z-index: 2000;
+}
+
+.skip-link:focus {
+    top: 12px;
+}
+
+a {
+    color: var(--pos-accent-dark);
+}
+
+a:hover {
+    color: var(--pos-accent);
+}
+
+:focus-visible {
+    outline: 3px solid rgba(255, 107, 53, 0.35);
+    outline-offset: 2px;
+}
+
+
+/* =====================================================
+   APP NAVBAR
+===================================================== */
+
+.app-navbar {
+    min-height: 72px;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(12px);
+    padding: 10px 18px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+}
+
+.app-navbar .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: 0.2px;
+}
+
+.brand-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--pos-accent), #ff8a5b);
+    color: #fff;
+    font-size: 18px;
+}
+
+.brand-name {
+    display: block;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.brand-tag {
+    display: block;
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.app-navbar .navbar-toggler {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #fff;
+    padding: 6px 10px;
+}
+
+.app-nav .nav-link {
+    color: #cbd5e1;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.app-nav .nav-link:hover,
+.app-nav .nav-link.active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.app-nav .nav-link.active {
+    background: var(--pos-accent);
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+@media (min-width: 992px) {
+    .nav-user {
+        margin-top: 0;
+    }
+}
+
+.user-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #fff;
+    padding: 6px 10px 6px 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.user-chip:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.user-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--pos-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.user-meta {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.user-meta small {
+    color: #94a3b8;
+    font-size: 11px;
+}
+
+.btn-ghost-nav {
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.btn-ghost-nav:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+.flash-stack {
+    max-width: 1200px;
+    margin: 16px auto 0;
+    padding: 0 18px;
+}
+
+.flash-stack .alert {
+    border: 0;
+    border-radius: 14px;
+    box-shadow: var(--pos-shadow);
+}
+
+
+/* =====================================================
+   PAGE LAYOUT
+===================================================== */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.page-kicker {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--pos-accent-dark);
+    margin-bottom: 4px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #334155;
+    font-size: 13px;
+}
+
+.form-control,
+.form-select,
+.input-group-text {
+    border-color: var(--pos-border);
+    min-height: 46px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--pos-accent);
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.15);
+}
+
+.back-link {
+    color: var(--pos-muted);
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.back-link:hover {
+    color: var(--pos-ink);
+}
+
+kbd {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    padding: 1px 6px;
+    font-size: 11px;
+}
+
+.invoice-container {
+    max-width: 920px;
+    margin: auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: var(--pos-shadow);
+    border: 1px solid var(--pos-border);
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 18px;
+    border-bottom: 3px solid var(--pos-accent);
+}
+
+.profile-hero {
+    text-align: center;
+    padding: 8px 0 20px;
+}
+
+.profile-avatar {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 12px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--pos-accent), #ff8a5b);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+}
+
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.card {
+    border: none;
+    border-radius: 14px;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.btn {
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: var(--pos-accent);
+    border-color: var(--pos-accent);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: var(--pos-accent-dark);
+    border-color: var(--pos-accent-dark);
+}
+
+
+/* =====================================================
+   TABLES
+===================================================== */
+
+.table {
+    vertical-align: middle;
+}
+
+.table thead th {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+
+/* =====================================================
+   BADGES
+===================================================== */
+
+.badge {
+    font-weight: 500;
+    padding: 7px 10px;
+    border-radius: 6px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .navbar-brand {
+        font-size: 17px;
+    }
+
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+}
+
+
+/* =========================================
+   ADMIN DASHBOARD
+========================================= */
+
+.dashboard-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    height: 100%;
+    border: 1px solid var(--pos-border);
+    box-shadow: var(--pos-shadow);
+    transition: 0.25s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1);
+    color: inherit;
+    border-color: #f3d5c8;
+}
+
+.dashboard-icon {
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 25px;
+}
+
+.dashboard-card h6 {
+    color: #777;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.dashboard-card h3 {
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.dashboard-card a,
+.dashboard-card span {
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--pos-accent-dark);
+    font-weight: 600;
+}
+
+
+/* Statistics */
+
+.stat-box {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 16px;
+    border-left: 5px solid var(--pos-accent);
+    box-shadow: var(--pos-shadow);
+}
+
+.stat-box.warning {
+    border-left-color: #ffc107;
+}
+
+.stat-box span {
+    color: #777;
+    font-size: 14px;
+}
+
+.stat-box h2 {
+    margin: 10px 0 0;
+    font-weight: 700;
+}
+
+
+/* Dashboard panels */
+
+.dashboard-panel {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-panel .card-header {
+    background: #ffffff;
+    padding: 20px;
+    border-bottom: 1px solid #eeeeee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* Tables */
+
+.dashboard-panel .table thead th {
+    background: #f8f9fa;
+    color: #666;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.dashboard-panel .table td {
+    font-size: 14px;
+}
+
+
+/* Quick actions */
+
+.quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quick-action {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 13px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #333;
+    background: #f8f9fa;
+    transition: 0.2s ease;
+}
+
+.quick-action:hover {
+    background: #eef3ff;
+    transform: translateX(3px);
+}
+
+.quick-action > i {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0d6efd;
+    font-size: 19px;
+}
+
+.quick-action span {
+    display: flex;
+    flex-direction: column;
+}
+
+.quick-action strong {
+    font-size: 14px;
+}
+
+.quick-action small {
+    color: #888;
+    margin-top: 2px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .dashboard-card {
+        padding: 18px;
+    }
+
+    .stat-box {
+        padding: 20px;
+    }
+
+    .dashboard-panel .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+}
+
+
+/* =========================================
+   PRODUCT MANAGEMENT
+========================================= */
+
+.product-thumb,
+.product-thumb-placeholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.product-thumb-placeholder {
+    background: #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8b8b8b;
+    font-size: 20px;
+}
+
+.product-code {
+    background: #f1f3f5;
+    padding: 5px 9px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.product-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+}
+
+.table td,
+.table th {
+    vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+
+    .product-thumb,
+    .product-thumb-placeholder {
+        width: 40px;
+        height: 40px;
+    }
+
+}
+
+/* =========================================
+   CATEGORY & STAFF
+========================================= */
+
+.category-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #eef3ff;
+    color: #0d6efd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+}
+
+.staff-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #0d6efd;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+
+/* =========================================
+   SUPPLIER & CUSTOMER
+========================================= */
+
+.supplier-icon,
+.customer-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+}
+
+.supplier-icon {
+    background: #fff4e6;
+    color: #fd7e14;
+}
+
+.customer-icon {
+    background: #eef3ff;
+    color: #0d6efd;
+}
+
+.supplier-details {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    color: #666;
+    font-size: 14px;
+}
+
+.supplier-details i {
+    width: 20px;
+    color: #0d6efd;
+}
+
+.customer-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #eef3ff;
+    color: #0d6efd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   POS BILLING
+========================================= */
+
+.product-item {
+    transition: all 0.2s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.product-placeholder {
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f6f8;
+    border-radius: 10px;
+    font-size: 40px;
+    color: #adb5bd;
+}
+
+.product-card {
+    transition: all 0.2s ease;
+}
+
+#cartContainer {
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+#cartContainer::-webkit-scrollbar {
+    width: 5px;
+}
+
+#cartContainer::-webkit-scrollbar-thumb {
+    background: #adb5bd;
+    border-radius: 10px;
+}
+
+#productSearch {
+    border-radius: 8px;
+}
+
+#discount {
+    font-weight: 600;
+}
+
+#grandTotal {
+    font-size: 1.4rem;
+}
+
+@media (max-width: 991px) {
+
+    .sticky-lg-top {
+        position: static !important;
+    }
+
+}
+
+
+/* =========================================
+   TRANSACTION HISTORY
+========================================= */
+
+.table > :not(caption) > * > * {
+    padding: 14px 12px;
+}
+
+.table thead th {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+}
+
+.table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+@media (max-width: 767px) {
+
+    .table {
+        min-width: 950px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE ADMIN PORTAL
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Main containers */
+    .container,
+    .container-fluid {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    /* Navbar */
+    .navbar {
+        padding: 12px 14px !important;
+    }
+
+    .navbar-brand {
+        font-size: 18px !important;
+    }
+
+    .navbar-nav {
+        gap: 4px;
+    }
+
+    /* Page headers */
+    .page-header {
+        display: block !important;
+        margin-bottom: 18px;
+    }
+
+    .page-header h1,
+    .page-header h2,
+    .page-header h3 {
+        font-size: 22px !important;
+        margin-bottom: 12px;
+    }
+
+    /* Cards */
+    .card {
+        border-radius: 14px;
+        margin-bottom: 14px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    /* Dashboard statistics */
+    .stats-grid,
+    .dashboard-stats,
+    .row.stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Bootstrap rows */
+    .row {
+        --bs-gutter-x: 0.75rem;
+        --bs-gutter-y: 0.75rem;
+    }
+
+    /* Buttons */
+    .btn {
+        min-height: 42px;
+        border-radius: 9px;
+    }
+
+    .btn-sm {
+        min-height: 36px;
+    }
+
+    /* Forms */
+    .form-control,
+    .form-select {
+        min-height: 44px;
+        font-size: 14px;
+        border-radius: 9px;
+    }
+
+    textarea.form-control {
+        min-height: 100px;
+    }
+
+    /* Search/filter area */
+    .filter-section,
+    .search-section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filter-section .btn,
+    .search-section .btn {
+        width: 100%;
+    }
+
+    /* Tables */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 12px;
+    }
+
+    table {
+        min-width: 650px;
+    }
+
+    .table th,
+    .table td {
+        white-space: nowrap;
+        font-size: 13px;
+        padding: 10px 8px;
+    }
+
+    /* Action buttons */
+    .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .action-buttons .btn {
+        flex: 1;
+        min-width: 80px;
+    }
+
+    /* Product cards */
+    .product-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .product-card {
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 130px;
+        object-fit: cover;
+    }
+
+    /* Forms */
+    .form-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* Modal */
+    .modal-dialog {
+        margin: 10px;
+    }
+
+    .modal-content {
+        border-radius: 16px;
+    }
+
+    /* Alerts */
+    .alert {
+        border-radius: 10px;
+        font-size: 13px;
+    }
+
+    /* Admin navigation */
+    .admin-sidebar {
+        display: none;
+    }
+
+    .admin-content {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 14px !important;
+    }
+
+    /* Dashboard cards */
+    .stat-card {
+        padding: 14px;
+    }
+
+    .stat-card h3 {
+        font-size: 20px;
+    }
+
+    .stat-card p {
+        font-size: 12px;
+    }
+
+
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .container,
+    .container-fluid {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid,
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header h1,
+    .page-header h2 {
+        font-size: 20px !important;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-buttons .btn {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE APP CONTENT
+   ========================================================= */
+
+.mobile-page {
+    min-height: 100vh;
+    background: #f4f6f8;
+    padding-bottom: 80px;
+}
+
+.mobile-content {
+    padding: 15px;
+}
+
+.mobile-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-card-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #111827;
+}
+
+.mobile-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 0;
+    border-bottom: 1px solid #edf0f2;
+}
+
+.mobile-list-item:last-child {
+    border-bottom: none;
+}
+
+.mobile-list-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.mobile-list-subtitle {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 3px;
+}
+
+.mobile-badge {
+    padding: 6px 9px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.mobile-badge-danger {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.mobile-badge-success {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.mobile-badge-warning {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+
+/* =========================================================
+   MOBILE BOTTOM NAVIGATION
+   ========================================================= */
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .mobile-bottom-nav {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        height: 68px;
+
+        background: #ffffff;
+        border-top: 1px solid #e5e7eb;
+
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.08);
+
+        z-index: 9999;
+    }
+
+    .mobile-bottom-nav a {
+        flex: 1;
+        text-align: center;
+        text-decoration: none;
+        color: #6b7280;
+        font-size: 10px;
+        padding: 7px 2px;
+    }
+
+    .mobile-bottom-nav a.active {
+        color: #ff6b35;
+        font-weight: 700;
+    }
+
+    .mobile-bottom-nav .nav-icon {
+        display: block;
+        font-size: 20px;
+        margin-bottom: 2px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE TABLE → CARD STYLE
+   ========================================================= */
+
+@media (max-width: 576px) {
+
+    .mobile-table-card {
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 14px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .mobile-table-card .row-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 7px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .mobile-table-card .row-item:last-child {
+        border-bottom: none;
+    }
+
+    .mobile-table-card .label {
+        color: #6b7280;
+        font-size: 11px;
+    }
+
+    .mobile-table-card .value {
+        color: #111827;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: right;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE PAGE HEADER
+   ========================================================= */
+
+.mobile-page-header {
+    background: #111827;
+    color: #ffffff;
+    padding: 18px 15px;
+}
+
+.mobile-page-header h1 {
+    font-size: 21px;
+    margin: 0;
+    font-weight: 700;
+}
+
+.mobile-page-header p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #aeb6c2;
+}
+
+
+/* =========================================================
+   MOBILE FLOATING ACTION BUTTON
+   ========================================================= */
+
+.mobile-fab {
+    position: fixed;
+    right: 18px;
+    bottom: 85px;
+
+    width: 54px;
+    height: 54px;
+
+    border-radius: 50%;
+
+    background: #ff6b35;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+    font-size: 25px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+
+    z-index: 999;
+}
+
+.mobile-fab:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+}

@@ -1,0 +1,203 @@
+
+{% extends "base.html" %}
+
+{% block title %}Login | Retail POS{% endblock %}
+
+{% block extra_css %}
+<style>
+
+    body {
+        background:
+            linear-gradient(
+                135deg,
+                #111827,
+                #1f2937
+            );
+        min-height: 100vh;
+    }
+
+    .login-wrapper {
+        min-height: calc(100vh - 1px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 420px;
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .brand-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 18px;
+
+        background: #2563eb;
+        color: white;
+
+        font-size: 32px;
+    }
+
+    .login-title {
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .login-subtitle {
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .form-control {
+        height: 48px;
+        border-radius: 10px;
+    }
+
+    .form-control:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.15);
+    }
+
+    .login-btn {
+        height: 48px;
+        border-radius: 10px;
+        font-weight: 600;
+        background: #2563eb;
+        border: none;
+    }
+
+    .login-btn:hover {
+        background: #1d4ed8;
+    }
+
+    .footer-text {
+        text-align: center;
+        color: #9ca3af;
+        font-size: 13px;
+        margin-top: 25px;
+    }
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <div class="text-center">
+
+            <div class="brand-icon">
+                <i class="bi bi-shop"></i>
+            </div>
+
+            <h2 class="login-title">
+                Retail POS
+            </h2>
+
+            <p class="login-subtitle">
+                Point of Sale & Billing System
+            </p>
+
+        </div>
+
+
+        <form
+            method="POST"
+            class="mt-4"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Username
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-person"></i>
+                    </span>
+
+                    <input
+                        type="text"
+                        name="username"
+                        class="form-control"
+                        placeholder="Enter username"
+                        required
+                        autofocus
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Password
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-lock"></i>
+                    </span>
+
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Enter password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary login-btn w-100"
+            >
+                <i class="bi bi-box-arrow-in-right me-2"></i>
+                Sign In
+            </button>
+
+        </form>
+
+
+        <div class="footer-text">
+            Retail POS Management System
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

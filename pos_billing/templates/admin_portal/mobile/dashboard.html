@@ -1,0 +1,629 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Mobile</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+            font-family: Arial, sans-serif;
+            padding-bottom: 80px;
+        }
+
+        .mobile-header {
+            background: #111827;
+            color: white;
+            padding: 20px 18px;
+            border-radius: 0 0 25px 25px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .header-subtitle {
+            font-size: 13px;
+            color: #aeb6c2;
+            margin-top: 5px;
+        }
+
+        .profile-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #ff6b35;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .sales-card {
+            margin: 18px;
+            margin-top: -5px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .sales-label {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .sales-value {
+            font-size: 30px;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        .section {
+            padding: 0 18px;
+            margin-top: 22px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 17px;
+            padding: 16px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: #fff1eb;
+            color: #ff6b35;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 23px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .quick-card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px 8px;
+            text-align: center;
+            text-decoration: none;
+            color: #111827;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-2px);
+            color: #ff6b35;
+        }
+
+        .quick-icon {
+            font-size: 23px;
+            margin-bottom: 7px;
+        }
+
+        .quick-label {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .stock-card {
+            background: white;
+            border-radius: 17px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .stock-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px;
+            border-bottom: 1px solid #edf0f2;
+        }
+
+        .stock-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .product-code {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 3px;
+        }
+
+        .stock-badge {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 6px 9px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .sale-card {
+            background: white;
+            border-radius: 17px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .sale-item {
+            padding: 14px;
+            border-bottom: 1px solid #edf0f2;
+        }
+
+        .sale-item:last-child {
+            border-bottom: none;
+        }
+
+        .sale-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .invoice-number {
+            font-size: 13px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .customer-name {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        .sale-total {
+            font-size: 14px;
+            font-weight: 700;
+            color: #16a34a;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 68px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.08);
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #6b7280;
+            text-align: center;
+            font-size: 10px;
+            min-width: 55px;
+        }
+
+        .nav-item.active {
+            color: #ff6b35;
+            font-weight: 700;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                max-width: 480px;
+                margin: auto;
+                background: #e5e7eb;
+            }
+
+            .bottom-nav {
+                max-width: 480px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Header -->
+<div class="mobile-header">
+
+    <div class="header-top">
+
+        <div>
+            <div class="header-title">
+                Admin Dashboard
+            </div>
+
+            <div class="header-subtitle">
+                POS Management System
+            </div>
+        </div>
+
+        <div class="profile-icon">
+            {{ request.user.username|first|upper }}
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Today's Sales -->
+<div class="sales-card">
+
+    <div class="sales-label">
+        Today's Sales
+    </div>
+
+    <div class="sales-value">
+        ₹{{ today_sales|floatformat:2 }}
+    </div>
+
+</div>
+
+
+<!-- Statistics -->
+<div class="section">
+
+    <div class="section-title">
+        Overview
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon">▣</div>
+            <div class="stat-number">
+                {{ total_products }}
+            </div>
+            <div class="stat-label">
+                Products
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">♙</div>
+            <div class="stat-number">
+                {{ total_staff }}
+            </div>
+            <div class="stat-label">
+                Staff
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">◈</div>
+            <div class="stat-number">
+                {{ total_suppliers }}
+            </div>
+            <div class="stat-label">
+                Suppliers
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">♙</div>
+            <div class="stat-number">
+                {{ total_customers }}
+            </div>
+            <div class="stat-label">
+                Customers
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">▤</div>
+            <div class="stat-number">
+                {{ total_sales }}
+            </div>
+            <div class="stat-label">
+                Bills
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">◆</div>
+            <div class="stat-number">
+                {{ total_purchases }}
+            </div>
+            <div class="stat-label">
+                Purchases
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Quick Actions -->
+ 
+
+
+
+<div class="section">
+
+
+    <div class="section-title">
+        Quick Actions
+    </div>
+
+    <div class="quick-grid">
+            <a href="{% url 'category_list' %}" class="quick-card">
+
+    <div class="quick-icon">
+        #
+    </div>
+
+    <div class="quick-label">
+        Categories
+    </div>
+
+    </a>
+
+        <a href="{% url 'admin_products' %}" class="quick-card">
+            <div class="quick-icon">▣</div>
+            <div class="quick-label">Products</div>
+        </a>
+
+        <a href="{% url 'admin_staff' %}" class="quick-card">
+            <div class="quick-icon">♙</div>
+            <div class="quick-label">Staff</div>
+        </a>
+
+        <a href="{% url 'admin_suppliers' %}" class="quick-card">
+            <div class="quick-icon">◈</div>
+            <div class="quick-label">Suppliers</div>
+        </a>
+
+        <a href="{% url 'purchase_list' %}" class="quick-card">
+            <div class="quick-icon">◆</div>
+            <div class="quick-label">Purchases</div>
+        </a>
+
+        <a href="{% url 'admin_returns' %}" class="quick-card">
+            <div class="quick-icon">↩</div>
+            <div class="quick-label">Returns</div>
+        </a>
+
+        <a href="{% url 'admin_ledger' %}" class="quick-card">
+            <div class="quick-icon">▤</div>
+            <div class="quick-label">Ledger</div>
+        </a>
+
+        <a href="{% url 'admin_reports' %}" class="quick-card">
+            <div class="quick-icon">▥</div>
+            <div class="quick-label">Reports</div>
+        </a>
+
+        <a href="{% url 'customers' %}" class="quick-card">
+            <div class="quick-icon">♙</div>
+            <div class="quick-label">Customers</div>
+        </a>
+
+        <a href="{% url 'billing' %}" class="quick-card">
+            <div class="quick-icon">₹</div>
+            <div class="quick-label">Billing</div>
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- Low Stock -->
+<div class="section">
+
+    <div class="section-title">
+        Low Stock
+    </div>
+
+    <div class="stock-card">
+
+        {% for product in low_stock_products %}
+
+            <div class="stock-item">
+
+                <div>
+                    <div class="product-name">
+                        {{ product.name }}
+                    </div>
+
+                    <div class="product-code">
+                        {{ product.code }}
+                    </div>
+                </div>
+
+                <div class="stock-badge">
+                    {{ product.stock }} left
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="p-4 text-center text-muted">
+                No low-stock products
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+<!-- Recent Sales -->
+<div class="section">
+
+    <div class="section-title">
+        Recent Sales
+    </div>
+
+    <div class="sale-card">
+
+        {% for sale in recent_sales %}
+
+            <div class="sale-item">
+
+                <div class="sale-row">
+
+                    <div>
+                        <div class="invoice-number">
+                            {{ sale.invoice_number }}
+                        </div>
+
+                        <div class="customer-name">
+                            {% if sale.customer %}
+                                {{ sale.customer.name }}
+                            {% else %}
+                                Walk-in Customer
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="sale-total">
+                        ₹{{ sale.total|floatformat:2 }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="p-4 text-center text-muted">
+                No sales available
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+
+    <a href="{% url 'mobile_admin' %}"
+       class="nav-item active">
+
+        <span class="nav-icon">⌂</span>
+        Home
+
+    </a>
+
+    <a href="{% url 'admin_products' %}"
+       class="nav-item">
+
+        <span class="nav-icon">▣</span>
+        Products
+
+    </a>
+
+    <a href="{% url 'admin_staff' %}"
+       class="nav-item">
+
+        <span class="nav-icon">♙</span>
+        Staff
+
+    </a>
+
+    <a href="{% url 'admin_reports' %}"
+       class="nav-item">
+
+        <span class="nav-icon">▥</span>
+        Reports
+
+    </a>
+
+    <a href="{% url 'logout' %}"
+       class="nav-item">
+
+        <span class="nav-icon">↪</span>
+        Logout
+
+    </a>
+
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}User Profile | POS Billing{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-dark text-white py-3 rounded-top-4">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-person-circle me-2"></i> User Profile
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="display-4 text-primary mb-2">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                        <h4 class="fw-bold mb-1">{{ user.get_full_name|default:user.username }}</h4>
+                        <span class="badge bg-primary fs-6">
+                            {% if user.is_superuser %}
+                                Administrator
+                            {% elif user.staffprofile and user.staffprofile.role %}
+                                {{ user.staffprofile.role|title }}
+                            {% else %}
+                                Staff Member
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <span class="text-muted"><i class="bi bi-person me-2"></i> Username</span>
+                            <span class="fw-semibold">{{ user.username }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <span class="text-muted"><i class="bi bi-envelope me-2"></i> Email</span>
+                            <span class="fw-semibold">{{ user.email|default:"Not provided" }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <span class="text-muted"><i class="bi bi-calendar-check me-2"></i> Member Since</span>
+                            <span class="fw-semibold">{{ user.date_joined|date:"d M Y" }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <span class="text-muted"><i class="bi bi-clock-history me-2"></i> Last Login</span>
+                            <span class="fw-semibold">{{ user.last_login|date:"d M Y, h:i A"|default:"First login" }}</span>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex justify-content-between">
+                        {% if user.is_superuser %}
+                        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-dark">
+                            <i class="bi bi-arrow-left me-1"></i> Dashboard
+                        </a>
+                        {% else %}
+                        <a href="{% url 'billing' %}" class="btn btn-outline-dark">
+                            <i class="bi bi-arrow-left me-1"></i> POS Billing
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'logout' %}" class="btn btn-danger">
+                            <i class="bi bi-box-arrow-right me-1"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

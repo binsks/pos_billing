@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}Login | Retail POS{% endblock %}
+{% block body_class %}login-body{% endblock %}
+
+{% block extra_css %}
+<style>
+    .login-body {
+        background: #0f172a;
+        min-height: 100vh;
+    }
+
+    .login-shell {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .login-hero {
+        padding: 48px 56px;
+        color: #fff;
+        background:
+            radial-gradient(900px 420px at 10% 10%, rgba(255, 107, 53, 0.28), transparent 50%),
+            linear-gradient(160deg, #111827 0%, #0f172a 55%, #1e293b 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .hero-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 800;
+        font-size: 20px;
+    }
+
+    .hero-copy h1 {
+        font-size: 42px;
+        font-weight: 800;
+        max-width: 440px;
+        line-height: 1.15;
+        margin: 24px 0 12px;
+    }
+
+    .hero-copy p {
+        color: #94a3b8;
+        max-width: 420px;
+        font-size: 16px;
+    }
+
+    .hero-points {
+        display: grid;
+        gap: 12px;
+        margin-top: 32px;
+    }
+
+    .hero-points div {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        color: #e2e8f0;
+        font-weight: 600;
+    }
+
+    .hero-points i {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: rgba(255, 107, 53, 0.18);
+        color: #ff8a5b;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-panel {
+        background: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 24px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 420px;
+        background: #fff;
+        border-radius: 24px;
+        padding: 36px;
+        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+        border: 1px solid #e8edf3;
+    }
+
+    .login-title {
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .login-subtitle {
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    .login-btn {
+        height: 48px;
+        border-radius: 12px;
+        font-weight: 700;
+        background: var(--pos-accent);
+        border: none;
+    }
+
+    .login-btn:hover {
+        background: var(--pos-accent-dark);
+    }
+
+    .input-group-text {
+        background: #f8fafc;
+    }
+
+    @media (max-width: 900px) {
+        .login-shell {
+            grid-template-columns: 1fr;
+        }
+        .login-hero {
+            padding: 28px 22px 18px;
+            min-height: auto;
+        }
+        .hero-copy h1 {
+            font-size: 28px;
+            margin-top: 16px;
+        }
+        .hero-points {
+            margin: 16px 0 8px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-shell">
+    <section class="login-hero">
+        <div>
+            <div class="hero-brand">
+                <span class="brand-mark"><i class="bi bi-shop"></i></span>
+                Retail POS
+            </div>
+            <div class="hero-copy">
+                <h1>Fast checkout. Clear records. One counter.</h1>
+                <p>Sign in to bill customers, track stock, and keep every sale in the ledger.</p>
+            </div>
+            <div class="hero-points">
+                <div><i class="bi bi-upc-scan"></i> Barcode search and tap-to-add billing</div>
+                <div><i class="bi bi-wallet2"></i> Cash, card, and UPI in one bill</div>
+                <div><i class="bi bi-graph-up-arrow"></i> Live sales, stock, and staff tools</div>
+            </div>
+        </div>
+        <p class="mb-0" style="color:#64748b;font-size:13px;">Retail POS Management System</p>
+    </section>
+
+    <section class="login-panel">
+        <div class="login-card">
+            <h2 class="login-title mb-1">Welcome back</h2>
+            <p class="login-subtitle mb-4">Enter your staff credentials to continue.</p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" name="username" class="form-control" placeholder="Enter username" required autofocus>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary login-btn w-100">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                    Sign in
+                </button>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}

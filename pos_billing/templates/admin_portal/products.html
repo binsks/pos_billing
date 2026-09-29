@@ -1,0 +1,480 @@
+
+{% extends "base.html" %}
+
+{% block title %}Products | POS Billing{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-box-seam"></i>
+                Products
+            </h2>
+
+            <p class="text-muted mb-0">
+                Manage your product inventory
+            </p>
+        </div>
+
+        <a href="{% url 'add_product' %}"
+           class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i>
+            Add Product
+        </a>
+
+    </div>
+
+
+    <!-- Filters -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+        <div class="card-body">
+
+            <form method="GET">
+
+                <div class="row g-3 align-items-end">
+
+                    <!-- Search -->
+                    <div class="col-lg-5">
+
+                        <label class="form-label">
+                            Search Product
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                <i class="bi bi-search"></i>
+                            </span>
+
+                            <input
+                                type="text"
+                                name="search"
+                                value="{{ search }}"
+                                class="form-control"
+                                placeholder="Name, code or category"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Category -->
+                    <div class="col-lg-3">
+
+                        <label class="form-label">
+                            Category
+                        </label>
+
+                        <select
+                            name="category"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                All Categories
+                            </option>
+
+                            {% for category in categories %}
+
+                                <option
+                                    value="{{ category.id }}"
+                                    {% if selected_category == category.id|stringformat:"s" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ category.name }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Stock -->
+                    <div class="col-lg-2">
+
+                        <label class="form-label">
+                            Stock
+                        </label>
+
+                        <select
+                            name="stock"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                All
+                            </option>
+
+                            <option
+                                value="low"
+                                {% if stock_filter == "low" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Low Stock
+                            </option>
+
+                            <option
+                                value="out"
+                                {% if stock_filter == "out" %}
+                                    selected
+                                {% endif %}
+                            >
+                                Out of Stock
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Buttons -->
+                    <div class="col-lg-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-dark w-100 mb-2"
+                        >
+                            <i class="bi bi-funnel"></i>
+                            Filter
+                        </button>
+
+                        <a
+                            href="{% url 'product_list' %}"
+                            class="btn btn-light border w-100"
+                        >
+                            Clear
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Products -->
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-header bg-white py-3">
+
+            <div class="d-flex justify-content-between">
+
+                <strong>
+                    Product Inventory
+                </strong>
+
+                <span class="text-muted">
+                    {{ products|length }} product{{ products|length|pluralize }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table align-middle mb-0">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Code</th>
+                        <th>Category</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                        <th>Purchase</th>
+                        <th>Selling</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for product in products %}
+
+                    <tr>
+
+                        <!-- Product -->
+                        <td>
+
+                            <div class="d-flex align-items-center gap-3">
+
+                                {% if product.image %}
+
+                                    <img
+                                        src="{{ product.image.url }}"
+                                        class="product-thumb"
+                                        alt="{{ product.name }}"
+                                    >
+
+                                {% else %}
+
+                                    <div class="product-thumb-placeholder">
+                                        <i class="bi bi-box"></i>
+                                    </div>
+
+                                {% endif %}
+
+                                <div>
+
+                                    <div class="fw-semibold">
+                                        {{ product.name }}
+                                    </div>
+
+                                    <small class="text-muted">
+                                        ID: {{ product.id }}
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Code -->
+                        <td>
+                            <span class="product-code">
+                                {{ product.code }}
+                            </span>
+                        </td>
+
+
+                        <!-- Category -->
+                        <td>
+                            {{ product.category.name }}
+                        </td>
+
+
+                        <!-- Size -->
+                        <td>
+                            {{ product.size|default:"-" }}
+                        </td>
+
+
+                        <!-- Color -->
+                        <td>
+                            {{ product.color|default:"-" }}
+                        </td>
+
+
+                        <!-- Purchase -->
+                        <td>
+                            ₹{{ product.purchase_price }}
+                        </td>
+
+
+                        <!-- Selling -->
+                        <td class="fw-semibold">
+                            ₹{{ product.selling_price }}
+                        </td>
+
+
+                        <!-- Stock -->
+                        <td>
+
+                            <strong>
+                                {{ product.stock }}
+                            </strong>
+
+                        </td>
+
+
+                        <!-- Status -->
+                        <td>
+
+                            {% if product.stock == 0 %}
+
+                                <span class="badge bg-danger">
+                                    Out of Stock
+                                </span>
+
+                            {% elif product.stock <= 5 %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Low Stock
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-success">
+                                    In Stock
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Actions -->
+                        <td class="text-end">
+
+                            <div class="btn-group">
+
+                                <a
+                                    href="{% url 'edit_product' product.id %}"
+                                    class="btn btn-sm btn-outline-primary"
+                                    title="Edit"
+                                >
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+
+
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-outline-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal{{ product.id }}"
+                                >
+                                    <i class="bi bi-trash"></i>
+                                </button>
+
+                            </div>
+
+
+                            <!-- Delete Modal -->
+                            <div
+                                class="modal fade"
+                                id="deleteModal{{ product.id }}"
+                                tabindex="-1"
+                            >
+
+                                <div class="modal-dialog modal-dialog-centered">
+
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+
+                                            <h5 class="modal-title">
+                                                Delete Product
+                                            </h5>
+
+                                            <button
+                                                type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"
+                                            ></button>
+
+                                        </div>
+
+
+                                        <div class="modal-body text-start">
+
+                                            Are you sure you want to remove
+                                            <strong>
+                                                {{ product.name }}
+                                            </strong>?
+
+                                            <div class="alert alert-warning mt-3 mb-0">
+                                                The product will be marked
+                                                inactive instead of being
+                                                permanently deleted.
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="modal-footer">
+
+                                            <button
+                                                type="button"
+                                                class="btn btn-light"
+                                                data-bs-dismiss="modal"
+                                            >
+                                                Cancel
+                                            </button>
+
+                                            <form
+                                                method="POST"
+                                                action="{% url 'delete_product' product.id %}"
+                                            >
+
+                                                {% csrf_token %}
+
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-danger"
+                                                >
+                                                    Remove Product
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="10"
+                            class="text-center py-5"
+                        >
+
+                            <i class="bi bi-box-seam fs-1 text-muted"></i>
+
+                            <h5 class="mt-3">
+                                No products found
+                            </h5>
+
+                            <p class="text-muted">
+                                Add your first product to get started.
+                            </p>
+
+                            <a
+                                href="{% url 'add_product' %}"
+                                class="btn btn-primary"
+                            >
+                                <i class="bi bi-plus-lg"></i>
+                                Add Product
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,360 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    {% if product %}Edit Product{% else %}Add Product{% endif %}
+    | POS Billing
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-xl-9">
+
+            <!-- Header -->
+            <div class="mb-4">
+
+                <a
+                    href="{% url 'product_list' %}"
+                    class="text-decoration-none"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    Back to Products
+                </a>
+
+                <h2 class="fw-bold mt-3 mb-1">
+
+                    {% if product %}
+                        Edit Product
+                    {% else %}
+                        Add Product
+                    {% endif %}
+
+                </h2>
+
+                <p class="text-muted">
+                    {% if product %}
+                        Update product and inventory information.
+                    {% else %}
+                        Add a new product to your inventory.
+                    {% endif %}
+                </p>
+
+            </div>
+
+
+            <!-- Form -->
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body p-4 p-lg-5">
+
+                    <form
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <!-- Basic Information -->
+                        <h5 class="fw-bold mb-3">
+                            Product Information
+                        </h5>
+
+                        <div class="row g-3">
+
+                            <!-- Name -->
+                            <div class="col-md-8">
+
+                                <label class="form-label">
+                                    Product Name *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="name"
+                                    class="form-control"
+                                    value="{% if product %}{{ product.name }}{% else %}{{ form_data.name|default:'' }}{% endif %}"
+                                    placeholder="Example: Cotton Shirt"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- Code -->
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Product Code *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="code"
+                                    class="form-control"
+                                    value="{% if product %}{{ product.code }}{% else %}{{ form_data.code|default:'' }}{% endif %}"
+                                    placeholder="SKU-001"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- Category -->
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Category *
+                                </label>
+
+                                <select
+                                    name="category"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select Category
+                                    </option>
+
+                                    {% for category in categories %}
+
+                                        <option
+                                            value="{{ category.id }}"
+                                            {% if product and product.category_id == category.id %}
+                                                selected
+                                            {% elif not product and form_data.category == category.id|stringformat:"s" %}
+                                                selected
+                                            {% endif %}
+                                        >
+                                            {{ category.name }}
+                                        </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- Size -->
+                            <div class="col-md-3">
+
+                                <label class="form-label">
+                                    Size
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="size"
+                                    class="form-control"
+                                    value="{% if product %}{{ product.size }}{% else %}{{ form_data.size|default:'' }}{% endif %}"
+                                    placeholder="M / L / XL"
+                                >
+
+                            </div>
+
+
+                            <!-- Color -->
+                            <div class="col-md-3">
+
+                                <label class="form-label">
+                                    Color
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="color"
+                                    class="form-control"
+                                    value="{% if product %}{{ product.color }}{% else %}{{ form_data.color|default:'' }}{% endif %}"
+                                    placeholder="Blue"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <hr class="my-4">
+
+
+                        <!-- Pricing -->
+                        <h5 class="fw-bold mb-3">
+                            Pricing & Inventory
+                        </h5>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Purchase Price *
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        ₹
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        name="purchase_price"
+                                        class="form-control"
+                                        step="0.01"
+                                        min="0"
+                                        value="{% if product %}{{ product.purchase_price }}{% else %}{{ form_data.purchase_price|default:'0' }}{% endif %}"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Selling Price *
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        ₹
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        name="selling_price"
+                                        class="form-control"
+                                        step="0.01"
+                                        min="0"
+                                        value="{% if product %}{{ product.selling_price }}{% else %}{{ form_data.selling_price|default:'0' }}{% endif %}"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <label class="form-label">
+                                    Stock Quantity *
+                                </label>
+
+                                <input
+                                    type="number"
+                                    name="stock"
+                                    class="form-control"
+                                    min="0"
+                                    value="{% if product %}{{ product.stock }}{% else %}{{ form_data.stock|default:'0' }}{% endif %}"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <hr class="my-4">
+
+
+                        <!-- Description -->
+                        <h5 class="fw-bold mb-3">
+                            Additional Information
+                        </h5>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Product Image
+                            </label>
+
+                            <input
+                                type="file"
+                                name="image"
+                                class="form-control"
+                                accept="image/*"
+                            >
+
+                            {% if product.image %}
+
+                                <div class="mt-3">
+
+                                    <img
+                                        src="{{ product.image.url }}"
+                                        alt="{{ product.name }}"
+                                        class="product-preview"
+                                    >
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Description
+                            </label>
+
+                            <textarea
+                                name="description"
+                                class="form-control"
+                                rows="4"
+                                placeholder="Enter product description..."
+                            >{% if product %}{{ product.description }}{% else %}{{ form_data.description|default:'' }}{% endif %}</textarea>
+
+                        </div>
+
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2">
+
+                            <a
+                                href="{% url 'product_list' %}"
+                                class="btn btn-light border px-4"
+                            >
+                                Cancel
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary px-4"
+                            >
+
+                                {% if product %}
+                                    <i class="bi bi-check-lg"></i>
+                                    Update Product
+                                {% else %}
+                                    <i class="bi bi-plus-lg"></i>
+                                    Add Product
+                                {% endif %}
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

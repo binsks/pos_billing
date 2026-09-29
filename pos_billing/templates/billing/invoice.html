@@ -1,0 +1,396 @@
+
+{% extends "base.html" %}
+
+{% block title %}Invoice {{ sale.invoice_number }}{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-receipt-cutoff me-2"></i>
+                Invoice
+            </h2>
+
+            <p class="text-muted mb-0">
+                {{ sale.invoice_number }}
+            </p>
+        </div>
+
+        <div class="d-flex gap-2">
+
+            <a href="{% url 'billing' %}"
+               class="btn btn-outline-dark">
+
+                <i class="bi bi-arrow-left me-1"></i>
+                New Bill
+
+            </a>
+
+            <button
+                type="button"
+                onclick="window.print()"
+                class="btn btn-primary">
+
+                <i class="bi bi-printer me-1"></i>
+                Print Bill
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Invoice -->
+    <div class="invoice-container">
+
+        <!-- Header -->
+        <div class="invoice-header">
+
+            <div>
+                <h2 class="fw-bold mb-1">
+                    POS BILLING
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Retail & Textile Store
+                </p>
+            </div>
+
+            <div class="text-end">
+
+                <h5 class="fw-bold mb-1">
+                    INVOICE
+                </h5>
+
+                <div>
+                    {{ sale.invoice_number }}
+                </div>
+
+                <small class="text-muted">
+                    {{ sale.created_at|date:"d M Y, h:i A" }}
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <!-- Customer / Staff -->
+        <div class="row mb-4">
+
+            <div class="col-md-6">
+
+                <h6 class="text-uppercase text-muted small fw-bold">
+                    Customer
+                </h6>
+
+                {% if sale.customer %}
+
+                    <h6 class="fw-bold mb-1">
+                        {{ sale.customer.name }}
+                    </h6>
+
+                    <div>
+                        {{ sale.customer.phone }}
+                    </div>
+
+                    {% if sale.customer.email %}
+                        <div>
+                            {{ sale.customer.email }}
+                        </div>
+                    {% endif %}
+
+                {% else %}
+
+                    <h6 class="fw-bold">
+                        Walk-in Customer
+                    </h6>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="col-md-6 text-md-end mt-3 mt-md-0">
+
+                <h6 class="text-uppercase text-muted small fw-bold">
+                    Billed By
+                </h6>
+
+                <h6 class="fw-bold mb-1">
+                    {{ sale.staff.get_full_name|default:sale.staff.username }}
+                </h6>
+
+                <div>
+                    Payment:
+                    <strong>
+                        {{ sale.get_payment_method_display }}
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Products -->
+        <div class="table-responsive">
+
+            <table class="table invoice-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Product</th>
+
+                        <th>Code</th>
+
+                        <th class="text-center">
+                            Qty
+                        </th>
+
+                        <th class="text-end">
+                            Price
+                        </th>
+
+                        <th class="text-end">
+                            Total
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in sale.items.all %}
+
+                    <tr>
+
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                {{ item.product.name }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ item.product.code }}
+                        </td>
+
+                        <td class="text-center">
+                            {{ item.quantity }}
+                        </td>
+
+                        <td class="text-end">
+                            ₹{{ item.price|floatformat:2 }}
+                        </td>
+
+                        <td class="text-end fw-semibold">
+                            ₹{{ item.total|floatformat:2 }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Totals -->
+        <div class="row justify-content-end">
+
+            <div class="col-md-5">
+
+                <div class="invoice-summary">
+
+                    <div class="d-flex justify-content-between mb-2">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong>
+                            ₹{{ sale.subtotal|floatformat:2 }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="d-flex justify-content-between mb-2">
+
+                        <span>
+                            Discount
+                        </span>
+
+                        <strong class="text-danger">
+                            - ₹{{ sale.discount|floatformat:2 }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="d-flex justify-content-between mb-2">
+
+                        <span>
+                            Tax
+                        </span>
+
+                        <strong>
+                            ₹{{ sale.tax|floatformat:2 }}
+                        </strong>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <div class="d-flex justify-content-between invoice-total">
+
+                        <strong>
+                            Grand Total
+                        </strong>
+
+                        <strong>
+                            ₹{{ sale.total|floatformat:2 }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Footer -->
+        <div class="invoice-footer text-center mt-5">
+
+            <h6 class="fw-bold">
+                Thank You!
+            </h6>
+
+            <p class="text-muted mb-1">
+                Thank you for shopping with us.
+            </p>
+
+            <small class="text-muted">
+                Please retain this invoice for future reference.
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+.invoice-container {
+    max-width: 1000px;
+    margin: auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.invoice-table th {
+    background: #f8f9fa;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.invoice-table td,
+.invoice-table th {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.invoice-summary {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.invoice-total {
+    font-size: 20px;
+}
+
+.invoice-footer {
+    border-top: 1px dashed #ccc;
+    padding-top: 25px;
+}
+
+
+/* Print */
+
+@media print {
+
+    body {
+        background: #fff !important;
+    }
+
+    .no-print,
+    nav,
+    .navbar,
+    footer {
+        display: none !important;
+    }
+
+    .invoice-container {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .invoice-table {
+        width: 100%;
+    }
+
+    @page {
+        margin: 12mm;
+    }
+
+}
+
+</style>
+
+{% endblock %}
+

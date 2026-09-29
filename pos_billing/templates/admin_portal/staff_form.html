@@ -1,0 +1,200 @@
+
+{% extends "base.html" %}
+
+{% block title %}Add Staff | POS Billing{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <a href="{% url 'staff_list' %}"
+               class="text-decoration-none">
+
+                <i class="bi bi-arrow-left"></i>
+                Back to Staff
+
+            </a>
+
+
+            <div class="card border-0 shadow-sm rounded-4 mt-3">
+
+                <div class="card-body p-4 p-lg-5">
+
+                    <h3 class="fw-bold mb-1">
+                        <i class="bi bi-person-plus"></i>
+                        Add Staff
+                    </h3>
+
+                    <p class="text-muted mb-4">
+                        Create a new admin or billing staff account.
+                    </p>
+
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Full Name *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="name"
+                                    class="form-control"
+                                    placeholder="John Doe"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Phone
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="phone"
+                                    class="form-control"
+                                    placeholder="+91 9876543210"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Username *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="username"
+                                    class="form-control"
+                                    placeholder="john"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    placeholder="john@example.com"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Password *
+                                </label>
+
+                                <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    placeholder="Enter password"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Role *
+                                </label>
+
+                                <select
+                                    name="role"
+                                    class="form-select"
+                                >
+
+                                    <option value="staff">
+                                        Billing Staff
+                                    </option>
+
+                                    <option value="admin">
+                                        Admin
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="alert alert-info mt-4">
+
+                            <i class="bi bi-info-circle"></i>
+
+                            <strong>Billing Staff:</strong>
+                            Can access the billing portal.
+
+                            <br>
+
+                            <strong>Admin:</strong>
+                            Can manage products, staff, suppliers,
+                            returns and reports.
+
+                        </div>
+
+
+                        <div class="d-flex gap-2 mt-4">
+
+                            <a
+                                href="{% url 'staff_list' %}"
+                                class="btn btn-light border"
+                            >
+                                Cancel
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+                                <i class="bi bi-person-plus"></i>
+                                Create Staff
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
