@@ -1490,9 +1490,7 @@ def reports(request):
     recent_sales = Sale.objects.select_related( "customer", "staff" ).order_by("-id")[:10] 
     context = { "today": today, "total_sales": total_sales, "today_sales": today_sales, "total_bills": total_bills, "today_bills": today_bills, "total_purchases": total_purchases, "total_returns": total_returns, "total_products": total_products, "low_stock_products": low_stock_products, "total_customers": total_customers, "total_staff": total_staff, "cash_sales": cash_sales, "card_sales": card_sales, "upi_sales": upi_sales, "recent_sales": recent_sales, } 
     return render( request, "admin_portal/reports.html", context )
-# =========================================================
-# MOBILE ADMIN UI
-# =========================================================
+
 
 @login_required
 @user_passes_test(is_admin)
@@ -1534,10 +1532,6 @@ def mobile_admin(request):
     )
 
 
-# =========================================================
-# PROFILE
-# =========================================================
-
 @login_required
 def profile(request):
 
@@ -1550,9 +1544,6 @@ def profile(request):
     )
 
 
-# =========================================
-# SUPPLIER MANAGEMENT
-# =========================================
 
 @login_required
 def supplier_list(request):
@@ -2235,9 +2226,7 @@ def add_purchase(request):
             "purchase_price"
         )
 
-        # -----------------------------
-        # Basic validation
-        # -----------------------------
+
 
         if not supplier_id:
             messages.error(
@@ -2272,9 +2261,6 @@ def add_purchase(request):
         purchase_items = []
         subtotal = Decimal("0")
 
-        # -----------------------------
-        # Validate products
-        # -----------------------------
 
         for product_id, quantity, price in zip(
             product_ids,
@@ -2317,9 +2303,6 @@ def add_purchase(request):
 
             return redirect("add_purchase")
 
-        # -----------------------------
-        # Create purchase
-        # -----------------------------
 
         purchase = Purchase.objects.create(
             supplier=supplier,
@@ -2329,9 +2312,6 @@ def add_purchase(request):
             created_by=request.user,
         )
 
-        # -----------------------------
-        # Create items + update stock
-        # -----------------------------
 
         for item in purchase_items:
 
@@ -2358,9 +2338,6 @@ def add_purchase(request):
                 ]
             )
 
-        # -----------------------------
-        # Ledger
-        # -----------------------------
 
         Ledger.objects.create(
             transaction_type="purchase",
